@@ -44,7 +44,8 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5"
+    "constructs": "^10.0.5",
+    "hono": "^4.10.7"
   },
   "license": "Apache-2.0",
   "publishConfig": {

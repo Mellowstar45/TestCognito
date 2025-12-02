@@ -75,8 +75,16 @@
       "type": "build"
     },
     {
+      "name": "@aws-sdk/client-cognito-identity-provider",
+      "type": "runtime"
+    },
+    {
       "name": "aws-cdk-lib",
       "version": "^2.1.0",
+      "type": "runtime"
+    },
+    {
+      "name": "aws-sdk",
       "type": "runtime"
     },
     {

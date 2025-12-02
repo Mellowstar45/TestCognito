@@ -24,7 +24,7 @@ export class Testcognito extends cdk.Stack {
     });
 
     const apiFunction = new ln.NodejsFunction(this, "ApiFunction", {
-      entry: `${__dirname}/functions/api/index.ts`,
+      entry: `${__dirname}/functions/apis/index.ts`,
       environment: {
         STAGE: props.stage,
         SERVICE: props.serviceName,

@@ -3,7 +3,7 @@ const project = new Projalf({
   cdkVersion: "2.1.0",
   defaultReleaseBranch: "main",
   devDeps: ["projalf"],
-  deps: ["hono"],
+  deps: ["hono", "aws-sdk", "@aws-sdk/client-cognito-identity-provider"],
   name: "TestCognito",
   projenrcTs: true,
 

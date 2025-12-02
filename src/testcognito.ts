@@ -1,4 +1,5 @@
 import * as cdk from "aws-cdk-lib";
+import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as apigw from "aws-cdk-lib/aws-apigatewayv2";
 import * as integrations from "aws-cdk-lib/aws-apigatewayv2-integrations";
@@ -22,13 +23,30 @@ export class Testcognito extends cdk.Stack {
         allowOrigins: ["*"],
       },
     });
-
+    const userPool = new cognito.UserPool(this, "UserPool", {
+      selfSignUpEnabled: true,
+      signInAliases: { username: true, email: true },
+      passwordPolicy: {
+        minLength: 12,
+        requireLowercase: true,
+        requireUppercase: true,
+        requireDigits: true,
+        requireSymbols: true,
+      },
+    });
+    const userPoolClient = userPool.addClient("UserPoolClient", {
+      authFlows: { userPassword: true },
+      preventUserExistenceErrors: true,
+      generateSecret: false,
+    });
     const apiFunction = new ln.NodejsFunction(this, "ApiFunction", {
       entry: `${__dirname}/functions/apis/index.ts`,
       environment: {
         STAGE: props.stage,
         SERVICE: props.serviceName,
         NODE_OPTIONS: "--enable-source-maps",
+        USER_POOL_ID: userPool.userPoolId,
+        COGNITO_CLIENT_ID: userPoolClient.userPoolClientId,
       },
       bundling: { minify: true, sourceMap: true },
       runtime: lambda.Runtime.NODEJS_20_X,
@@ -51,6 +69,14 @@ export class Testcognito extends cdk.Stack {
     new cdk.CfnOutput(this, "ApiUrl", {
       value: api.url ?? "",
       description: "API URL",
+    });
+    new cdk.CfnOutput(this, "UserPoolId", {
+      value: userPool.userPoolId,
+      description: "Cognito User Pool ID",
+    });
+    new cdk.CfnOutput(this, "UserPoolClientId", {
+      value: userPoolClient.userPoolClientId,
+      description: "Cognito User Pool Client ID",
     });
   }
 }

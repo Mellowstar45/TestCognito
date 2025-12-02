@@ -1,5 +1,7 @@
 {
   "test-TestCognito": {
-    "ApiUrl": "https://lhqyfd12kk.execute-api.eu-north-1.amazonaws.com/"
+    "UserPoolClientId": "3pvaa46ovquk795sa30shoro79",
+    "ApiUrl": "https://lhqyfd12kk.execute-api.eu-north-1.amazonaws.com/",
+    "UserPoolId": "eu-north-1_IEVocxgYI"
   }
 }
